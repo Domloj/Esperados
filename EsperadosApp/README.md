@@ -13,7 +13,7 @@ Download complete binaries from [link](https://www.antlr.org/download/antlr-4.13
 ```
 > curl -O ~/ProgramFiles/antlr/antlr-4.13.2-complete.jar https://www.antlr.org/download/antlr-4.13.2-complete.jar
 > echo 'alias antlr4="java -jar ~/ProgramFiles/antlr/antlr-4.13.2-complete.jar"' >> ~/.bashrc
-> source ~/.bashrc
+> source ~/.bashrccd
 > cd ../Grammar
 > antlr4 -Dlanguage=Python3 -visitor Esperados.g4 -o ../EsperadosApp/src/generated
 > cd ../EsperadosApp

@@ -53,6 +53,10 @@ class EsperadosVisitorImpl(EsperadosVisitor):
             return self.visit(ctx.defList())
         elif ctx.inputExpr():
             return self.visit(ctx.inputExpr())
+        elif ctx.appendList():
+            return self.visit(ctx.appendList())
+        elif ctx.removeList():
+            return self.visit(ctx.removeList())
 
         return None
     
@@ -308,3 +312,34 @@ class EsperadosVisitorImpl(EsperadosVisitor):
         for i in range(0, len(ctx.expr())):
             self.lists[list_name].append(self.visitExpr(ctx.expr(i)))
         return None
+    
+    def visitAppendList(self, ctx: EsperadosParser.AppendListContext):
+        list_name = ctx.NAME().getText()
+        element = self.visit(ctx.expr())
+        if list_name in self.lists:
+            self.lists[list_name].append(element)
+        else:
+            raise NameError(f"List '{list_name}' is not defined")
+        return None
+    
+    def visitRemoveList(self, ctx: EsperadosParser.RemoveListContext):
+        list_name = ctx.NAME().getText()
+        element = self.visit(ctx.expr())
+        if list_name not in self.lists:
+            raise NameError(f"List '{list_name}' is not defined")
+    
+        if element not in self.lists[list_name]:
+            raise ValueError(f"Element '{element}' not found in list '{list_name}'")
+    
+        self.lists[list_name].remove(element)
+        return None
+    
+    # def visitListIndexing(self, ctx: EsperadosParser.ListIndexingContext):
+    #     list_name = ctx.NAME().getText()
+    #     if list_name not in self.lists:
+    #         raise NameError(f"List '{list_name}' is not defined")
+    #     index = self.visit(ctx.expr())
+    #     return self.lists[list_name[index]]
+        
+
+        

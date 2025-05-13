@@ -20,7 +20,9 @@ action          : printExpr
                 | whileLoop
                 | functionDef
                 | functionCall
-                | deleteStmt;
+                | deleteStmt
+                | appendList
+                | removeList;
 
 printExpr       : PRINT LP expr (COMMA expr)* RP ;
 
@@ -61,4 +63,8 @@ returnStmt      : RETURN expr? ;
 
 deleteStmt      : DEL NAME ;
 
-defList     : VARDEF NAME ASG LS (expr (COMMA expr)*)? PS;
+defList         : VARDEF NAME ASG LS (expr (COMMA expr)*)? PS;
+
+appendList      : NAME ADD expr ;
+
+removeList      : NAME SUB expr ;
